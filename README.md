@@ -1,62 +1,62 @@
-# Web Scraping With LangChain and Bright Data
+# LangChain と Bright Data を使用した Webスクレイピング
 
-[![Promo](https://github.com/luminati-io/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.com/) 
+[![Promo](https://github.com/luminati-io/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.jp/) 
 
-This guide explains how to combine web scraping with LangChain for real-world LLM data enrichment in this detailed step-by-step guide.
+このガイドでは、Webスクレイピングを LangChain と組み合わせて、実運用の LLM データエンリッチメントを行う方法を、詳細なステップバイステップで解説します。
 
-- [Using Web Scraping to Power Your LLM Applications](#using-web-scraping-to-power-your-llm-applications)
-- [Benefits and Challenges of Using Scraped Data in LangChain](#benefits-and-challenges-of-using-scraped-data-in-langchain)
-- [LangChain Web Scraping Powered By Bright Data: Step-by-Step Guide](#langchain-web-scraping-powered-by-bright-data-step-by-step-guide)
-  - [Prerequisites](#prerequisites)
-  - [Step #1: Project Setup](#step-1-project-setup)
-  - [Step #2: Install the Required Libraries](#step-2-install-the-required-libraries)
-  - [Step #3: Prepare Your Project](#step-3-prepare-your-project)
-  - [Step #4: Configure Web Scraper API](#step-4-configure-web-scraper-api)
-  - [Step #5: Use Bright Data for Web Scraping](#step-5-use-bright-data-for-web-scraping)
-  - [Step #6: Get Ready to Use OpenAI Models](#step-6-get-ready-to-use-openai-models)
-  - [Step #7: Generate the LLM Prompt](#step-7-generate-the-llm-prompt)
-  - [Step #8: Integrate OpenAI](#step-8-integrate-openai)
-  - [Step #9: Export the AI-Processed Data](#step-9-export-the-ai-processed-data)
-  - [Step #10: Add Logs](#step-10-add-logs)
-  - [Step #11: Put It All Together](#step-11-put-it-all-together)
-- [Conclusion](#conclusion)
+- [Webスクレイピングで LLM アプリケーションを強化する](#using-web-scraping-to-power-your-llm-applications)
+- [LangChain でスクレイピングデータを使用するメリットと課題](#benefits-and-challenges-of-using-scraped-data-in-langchain)
+- [Bright Data による LangChain Webスクレイピング：ステップバイステップガイド](#langchain-web-scraping-powered-by-bright-data-step-by-step-guide)
+  - [前提条件](#prerequisites)
+  - [ステップ #1: プロジェクトのセットアップ](#step-1-project-setup)
+  - [ステップ #2: 必要なライブラリをインストールする](#step-2-install-the-required-libraries)
+  - [ステップ #3: プロジェクトを準備する](#step-3-prepare-your-project)
+  - [ステップ #4: Web Scraper API を設定する](#step-4-configure-web-scraper-api)
+  - [ステップ #5: Webスクレイピングに Bright Data を使用する](#step-5-use-bright-data-for-web-scraping)
+  - [ステップ #6: OpenAI モデルを使用する準備をする](#step-6-get-ready-to-use-openai-models)
+  - [ステップ #7: LLM プロンプトを生成する](#step-7-generate-the-llm-prompt)
+  - [ステップ #8: OpenAI を統合する](#step-8-integrate-openai)
+  - [ステップ #9: AI で処理したデータをエクスポートする](#step-9-export-the-ai-processed-data)
+  - [ステップ #10: ログを追加する](#step-10-add-logs)
+  - [ステップ #11: すべてをまとめる](#step-11-put-it-all-together)
+- [結論](#conclusion)
 
 
-## Using Web Scraping to Power Your LLM Applications
+## Webスクレイピングで LLM アプリケーションを強化する
 
-Web scraping extracts data from websites to fuel RAG ([Retrieval-Augmented Generation](https://brightdata.com/blog/web-data/rag-explained)) applications and leverage LLMs ([Large Language Models](https://www.ibm.com/think/topics/large-language-models)). It bridges the gap between static databases and the real-time, domain-specific, or large datasets these applications require.
+Webスクレイピングは Web サイトからデータを抽出し、RAG（[Retrieval-Augmented Generation](https://brightdata.jp/blog/web-data/rag-explained)）アプリケーションを支え、LLM（[Large Language Models](https://www.ibm.com/think/topics/large-language-models)）を活用するために用いられます。これは、静的なデータベースと、これらのアプリケーションが必要とするリアルタイムでドメイン特化、または大規模なデータセットとのギャップを埋めるものです。
 
-## Benefits and Challenges of Using Scraped Data in LangChain
+## LangChain でスクレイピングデータを使用するメリットと課題
 
-[LangChain](https://www.langchain.com/) integrates LLMs with diverse data sources for tasks like analysis, summarization, and Q&A. However, gathering high-quality data is challenging due to anti-bot measures, CAPTCHAs, and dynamic websites. Bright Data’s [Web Scraper API](https://brightdata.com/products/web-scraper) addresses these issues with features like IP rotation, CAPTCHA solving, and JavaScript rendering, ensuring efficient and reliable data collection through simple API calls.
+[LangChain](https://www.langchain.com/) は、分析、要約、Q&A といったタスクのために、LLM を多様なデータソースと統合します。しかし、高品質なデータの収集は、アンチボット対策、CAPTCHA、動的 Web サイトの存在により困難です。Bright Data の [Web Scraper API](https://brightdata.jp/products/web-scraper) は、IP ローテーション、CAPTCHA 解決、JavaScript レンダリングなどの機能でこれらの問題に対処し、シンプルな API 呼び出しを通じて効率的かつ信頼性の高いデータ収集を実現します。
 
-## LangChain Web Scraping Powered By Bright Data: Step-by-Step Guide
+## Bright Data による LangChain Webスクレイピング：ステップバイステップガイド
 
-Learn to build a LangChain web scraping script that retrieves content from a CNN article using Bright Data’s Web Scraper API, then sends it to OpenAI for summarization. We’ll use [this CNN article](https://www.cnn.com/2024/12/16/weather/white-christmas-forecast-climate/) as our target.
+Bright Data の Web Scraper API を使用して CNN の記事からコンテンツを取得し、その後 OpenAI に送って要約する LangChain の Webスクレイピングスクリプトを構築する方法を学びます。ターゲットとして [この CNN 記事](https://www.cnn.com/2024/12/16/weather/white-christmas-forecast-climate/) を使用します。
 
 ![CNN article on Christmas](https://github.com/luminati-io/langchain-web-scraping/blob/main/Images/image-131-1024x492.png)
 
-This simple example can be easily extended with additional LangChain features, such as creating an AG chatbot based on SERP data.
+このシンプルな例は、SERP データに基づく AG チャットボットの作成など、追加の LangChain 機能で簡単に拡張できます。
 
-### Prerequisites
+### 前提条件
 
-To get through this guide, you will need the following:
+このガイドを進めるには、以下が必要です。
 
-- Python 3+ installed on your machine
-- An OpenAI API key
-- A Bright Data account
+- マシンに Python 3+ がインストールされていること
+- OpenAI API key
+- Bright Data アカウント
 
-### Step #1: Project Setup
+### ステップ #1: プロジェクトのセットアップ
 
-Ensure that you have Python 3 is installed. Then create a folder for your project:
+Python 3 がインストールされていることを確認してください。次に、プロジェクト用のフォルダを作成します。
 
 ```bash
 mkdir langchain_scraping
 ```
 
-`langchain_scrping` will contain your Python LangChain scraping project.
+`langchain_scrping` に Python の LangChain スクレイピングプロジェクトを格納します。
 
-Then, navigate to the project folder and initialize a Python virtual environment inside it:
+次に、プロジェクトフォルダへ移動し、その中で Python 仮想環境を初期化します。
 
 ```bash
 cd langchain_scraping
@@ -65,128 +65,128 @@ python3 -m venv env
 
 > **Note**:
 >
-> On Windows, use `python` instead of `python3`.
+> Windows では、`python3` の代わりに `python` を使用してください。
 
-Now, open the project directory in your favorite Python IDE and add a `script.py` file inside `langchain_scraping`.
+ここで、お使いの Python IDE でプロジェクトディレクトリを開き、`langchain_scraping` の中に `script.py` ファイルを追加します。
 
-Activate the virtual environment:
+仮想環境を有効化します。
 
 ```bash
 ./env/bin/activate
 ```
 
-Or, on Windows, run:
+または Windows の場合は、次を実行します。
 
 ```bash
 env/Scripts/activate
 ```
 
-### Step #2: Install the Required Libraries
+### ステップ #2: 必要なライブラリをインストールする
 
-The Python LangChain scraping project relies on the following libraries:
+Python の LangChain スクレイピングプロジェクトは、以下のライブラリに依存します。
 
-- [`python-dotenv`](https://pypi.org/project/python-dotenv/): To load environment environment variables from a `.env` file. It will be used to manage sensitive information like Bright Data and OpenAI credentials.
-- [`requests`](https://pypi.org/project/requests/): To perform HTTP requests to interact with Bright Data’s Web Scraper API.
-- [`langchain_openai`](https://pypi.org/project/langchain-openai/): LangChain integrations for OpenAI through its [`openai`](https://pypi.org/project/openai/) SDK.
+- [`python-dotenv`](https://pypi.org/project/python-dotenv/): `.env` ファイルから環境変数を読み込むために使用します。Bright Data と OpenAI の認証情報などの機密情報を管理するために使用します。
+- [`requests`](https://pypi.org/project/requests/): Bright Data の Web Scraper API とやり取りするための HTTP リクエストを実行します。
+- [`langchain_openai`](https://pypi.org/project/langchain-openai/): [`openai`](https://pypi.org/project/openai/) SDK を介した OpenAI 向け LangChain 統合です。
 
-In an activated virtual environment, install all the dependencies:
+有効化された仮想環境で、依存関係をすべてインストールします。
 
 ```bash
 pip install python-dotenv requests langchain-community
 ```
 
-### Step #3: Prepare Your Project
+### ステップ #3: プロジェクトを準備する
 
-In `scripts.py`, add the following imports:
+`scripts.py` に、次の import を追加します。
 
 ```python
 from dotenv import load_dotenv
 import os
 ```
 
-These two lines allow you to read environment variable files.
+この 2 行により、環境変数ファイルを読み取れるようになります。
 
-Create a `.env` file in your project folder to store all your credentials.
+プロジェクトフォルダ内に `.env` ファイルを作成し、すべての認証情報を保存します。
 
-Instruct `python-dotenv` to load the environment variables from `.env` in `script.py`:
+`script.py` で、`python-dotenv` に `.env` から環境変数を読み込むよう指示します。
 
 ```python
 load_dotenv()
 ```
 
-You can now read environment variables from `.env` files or the system with:
+これで、`.env` ファイルまたはシステムから次のように環境変数を読み取れます。
 
 ```python
 os.environ.get("<ENV_NAME>")
 ```
 
-### Step #4: Configure Web Scraper API
+### ステップ #4: Web Scraper API を設定する
 
-Bright Data’s Web Scraper APIs allow you to retrieve parsed content from over 100 websites easily.
+Bright Data の Web Scraper APIs を使用すると、100 以上の Web サイトから解析済みコンテンツを簡単に取得できます。
 
-To set up Web Scraper API, refer to the [official documentation](https://docs.brightdata.com/scraping-automation/web-data-apis/web-scraper-api/overview) or follow the instructions below.
+Web Scraper API をセットアップするには、[公式ドキュメント](https://docs.brightdata.com/scraping-automation/web-data-apis/web-scraper-api/overview) を参照するか、以下の手順に従ってください。
 
-Create a Bright Data account if you don't have one yet. After logging in, go to your account dashboard. Here, click on the “Web Scraper API” button on the left:
+まだ Bright Data アカウントがない場合は作成してください。ログイン後、アカウントのダッシュボードに移動します。ここで左側の「Web Scraper API」ボタンをクリックします。
 
 ![Choosing Web Scraper API from the menu on the left](https://github.com/luminati-io/langchain-web-scraping/blob/main/Images/image-133-1024x489.png)
 
-Since the target site is [CNN.com](http://cnn.com/), type “cnn” in the search input and select the “CNN news — Collecy by URL” scraper:
+ターゲットサイトは [CNN.com](http://cnn.com/) なので、検索入力に「cnn」と入力し、「CNN news — Collecy by URL」スクレイパーを選択します。
 
 ![Searching for hte CNN Scraper API](https://github.com/luminati-io/langchain-web-scraping/blob/main/Images/image-134-1024x486.png)
 
-On the current page, click on the **Create token** button to generate a [Bright Data API token](https://docs.brightdata.com/general/account/api-token):
+現在のページで **Create token** ボタンをクリックして [Bright Data API token](https://docs.brightdata.com/general/account/api-token) を生成します。
 
 ![Creating a new token for the API](https://github.com/luminati-io/langchain-web-scraping/blob/main/Images/image-135-1024x408.png)
 
-This should open the following modal, where you can configure the details of your token:
+次のモーダルが開き、トークンの詳細を設定できます。
 
 ![Configuring the details of the new token](https://github.com/luminati-io/langchain-web-scraping/blob/main/Images/image-136.png)
 
-Once done, click **Save** and copy the value of your Bright Data API token.
+完了したら **Save** をクリックし、Bright Data API token の値をコピーします。
 
 ![Once you clicked save, the new token is shown](https://github.com/luminati-io/langchain-web-scraping/blob/main/Images/image-137.png)
 
-In your `.env` file, store this information as below:
+`.env` ファイルに、以下のようにこの情報を保存します。
 
 ```python
 BRIGHT_DATA_API_TOKEN="<YOUR_BRIGHT_DATA_API_TOKEN>"
 ```
 
-Replace `<YOUR_BRIGHT_DATA_API_TOKEN>` with the value you copied from the modal.
+`<YOUR_BRIGHT_DATA_API_TOKEN>` を、モーダルからコピーした値に置き換えてください。
 
-Your CNN news Web Scraper API page should now look similar to the example below:
+これで、CNN news の Web Scraper API ページは次の例のようになります。
 
 ![The CNN Scraper API page ](https://github.com/luminati-io/langchain-web-scraping/blob/main/Images/image-138-1024x492.png)
 
-### Step #5: Use Bright Data for Web Scraping
+### ステップ #5: Webスクレイピングに Bright Data を使用する
 
-The Web Scraper API starts a task tailored to your needs, then generates a snapshot of the scraped data. Here is the process overview:
+Web Scraper API はニーズに合わせたタスクを開始し、その後スクレイピングしたデータのスナップショットを生成します。プロセスの概要は次のとおりです。
 
-1. **Submit Request:** Provide the URLs of the pages to scrape.
-2. **Launch Task:** The API retrieves and parses data from the given URLs.
-3. **Retrieve Snapshot:** Continuously query the snapshot API to obtain the results once the task is complete.
+1. **リクエスト送信:** スクレイピングするページの URL を指定します。
+2. **タスク起動:** API が指定された URL からデータを取得して解析します。
+3. **スナップショット取得:** タスク完了後に結果を得るため、スナップショット API を継続的にクエリします。
 
-The POST endpoint for the CNN Web Scraper API is:
+CNN Web Scraper API の POST エンドポイントは次のとおりです。
 
 ```
 "https://api.brightdata.com/datasets/v3/trigger?dataset_id=gd_lycz8783197ch4wvwg&include_errors=true"
 ```
 
-That endpoint accepts an array of objects containing `url` fields and returns a response like this:
+このエンドポイントは `url` フィールドを含むオブジェクトの配列を受け取り、次のようなレスポンスを返します。
 
 ```json
 {"snapshot_id":"<YOUR_SNAPSHOT_ID>"}
 ```
 
-Using the `snapshot_id` from this response, you then need to query the following endpoint to retrieve your data:
+このレスポンスの `snapshot_id` を使用して、次のエンドポイントをクエリし、データを取得する必要があります。
 
 ```
 https://api.brightdata.com/datasets/v3/snapshot/<YOUR_SNAPSHOT_ID>?format=json
 ```
 
-This endpoint returns HTTP status code [`202`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/202) if the task is still in progress and [`200`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200) when the task is complete and the data is ready. The recommended approach is to poll this endpoint every 10 seconds until the task is finished.
+このエンドポイントは、タスクが進行中の場合は HTTP ステータスコード [`202`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/202) を返し、タスクが完了してデータの準備ができた場合は [`200`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200) を返します。推奨アプローチは、タスクが終了するまで 10 秒ごとにこのエンドポイントをポーリングすることです。
 
-Once the task is complete, the endpoint will return data in the following format:
+タスクが完了すると、このエンドポイントは次の形式でデータを返します。
 
 ```json
 [
@@ -216,16 +216,16 @@ Once the task is complete, the endpoint will return data in the following format
 ]
 ```
 
-The `content` attribute contains the parsed article data, representing the information you want to access.
+`content` 属性には解析済みの記事データが含まれており、これがアクセスしたい情報です。
 
-To implement this, first read the env from `.env` and initialize the endpoint URL constants:
+これを実装するために、まず `.env` から env を読み取り、エンドポイント URL の定数を初期化します。
 
 ```
 BRIGHT_DATA_API_TOKEN = os.environ.get("BRIGHT_DATA_API_TOKEN")
 BRIGHT_DATA_CNN_WEB_SCRAPER_API_URL = "https://api.brightdata.com/datasets/v3/trigger?dataset_id=gd_lycz8783197ch4wvwg&include_errors=true"
 ```
 
-Now turn the above process into a reusable function:
+次に、上記のプロセスを再利用可能な関数にします。
 
 ```python
 def get_scraped_data(url):
@@ -269,28 +269,28 @@ def get_scraped_data(url):
         print(response.text)
 ```
 
-Add these two imports to make it work:
+動作させるために、次の 2 つの import を追加します。
 
 ```python
 import requests
 import time
 ```
 
-### Step #6: Get Ready to Use OpenAI Models
+### ステップ #6: OpenAI モデルを使用する準備をする
 
-This example relies on OpenAI models for LLM integration within LangChain. Configure an OpenAI API key in your environment variables to use those models.
+この例では、LangChain 内での LLM 統合に OpenAI モデルを使用します。これらのモデルを使用するには、環境変数に OpenAI API key を設定してください。
 
-By default, `langchain_openai` automatically reads the OpenAI API key from the [`OPENAI_API_KEY`](https://python.langchain.com/docs/integrations/llms/openai/#credentials) environment variable. To set this up, add the following line to your `.env` file:
+デフォルトでは、`langchain_openai` は環境変数 [`OPENAI_API_KEY`](https://python.langchain.com/docs/integrations/llms/openai/#credentials) から OpenAI API key を自動的に読み取ります。これをセットアップするには、`.env` ファイルに次の行を追加します。
 
 ```
 OPENAI_API_KEY="<YOUR_OPEN_API_KEY>"
 ```
 
-Replace `<YOUR_OPENAI_API_KEY>` with the value of your [OpenAI API key](https://platform.openai.com/api-keys). If you do not know how to get one, follow the [official guide](https://platform.openai.com/docs/quickstart).
+`<YOUR_OPENAI_API_KEY>` を [OpenAI API key](https://platform.openai.com/api-keys) の値に置き換えてください。取得方法が分からない場合は、[公式ガイド](https://platform.openai.com/docs/quickstart) に従ってください。
 
-### Step #7: Generate the LLM Prompt
+### ステップ #7: LLM プロンプトを生成する
 
-Define a function that takes the scraped data and produces a prompt to get a summary of the article:
+スクレイピングしたデータを受け取り、記事の要約を取得するためのプロンプトを生成する関数を定義します。
 
 ```python
 def create_summary_prompt(content, words=100):
@@ -301,7 +301,7 @@ def create_summary_prompt(content, words=100):
            """
 ```
 
-In the current example, the complete prompt will be:
+この例では、完全なプロンプトは次のとおりです。
 
 ```
 Summarize the following content in less than 100 words.
@@ -310,50 +310,50 @@ CONTENT:
 'Christmas is approaching nearly as fast as Santa’s sleigh, but almost anyone in the United States fantasizing about a movie-worthy white Christmas might need to keep dreaming. Early forecasts indicate temperatures could max out around 10 to 15 degrees above normal for much of the country on Christmas Day. It’s a forecast reminiscent of last Christmas for many, which came amid the warmest winter on record in the US. But the country could be split in two by warmth and cold in the run up to the big day. [omitted for brevity...]'
 ```
 
-Here is what you will see when you pass it to ChatGPT:
+ChatGPT に渡すと、次のように表示されます。
 
 ![Passing the task of summarizing the content in less than 100 words](https://github.com/luminati-io/langchain-web-scraping/blob/main/Images/image-139-1024x626.png)
 
-### Step #8: Integrate OpenAI
+### ステップ #8: OpenAI を統合する
 
-First, call the `get_scraped_data()` function to retrieve the content from the article page:
+まず、`get_scraped_data()` 関数を呼び出して、記事ページからコンテンツを取得します。
 
 ```python
 article_url = "https://www.cnn.com/2024/12/16/weather/white-christmas-forecast-climate/"
 scraped_data = get_scraped_data(article_url)
 ```
 
-If the `scraped_data` is not `None`, generate the prompt:
+`scraped_data` が `None` でなければ、プロンプトを生成します。
 
 ```python
 if scraped_data is not None:
     prompt = create_summary_prompt(scraped_data)
 ```
 
-Finally, pass it to a [`ChatOpenAI`](https://python.langchain.com/docs/integrations/chat/openai/) LangChain object configured on the [GPT-4o mini](https://openai.com/index/gpt-4o-mini-advancing-cost-efficient-intelligence/) AI model:
+最後に、[GPT-4o mini](https://openai.com/index/gpt-4o-mini-advancing-cost-efficient-intelligence/) AI モデルで設定した [`ChatOpenAI`](https://python.langchain.com/docs/integrations/chat/openai/) の LangChain オブジェクトに渡します。
 
 ```python
 model = ChatOpenAI(model="gpt-4o-mini")
 response = model.invoke(prompt)
 ```
 
-Import `ChatOpenAI` from `langchain_openai`:
+`langchain_openai` から `ChatOpenAI` を import します。
 
 ```python
 from langchain_openai import ChatOpenAI
 ```
 
-At the end of the process, `summary` should contain something similar to the summary produced by ChatGPT in the previous step:
+処理の最後に、`summary` には前のステップで ChatGPT が生成した要約に近い内容が入ります。
 
 ```python
 summary = response.content
 ```
 
-### Step #9: Export the AI-Processed Data
+### ステップ #9: AI で処理したデータをエクスポートする
 
-Now you need to export the data generated by the selected AI model via LangChain to a human-readable format, such as a JSON file.
+次に、LangChain を介して選択した AI モデルが生成したデータを、JSON ファイルなどの人間が読める形式にエクスポートする必要があります。
 
-To do this, initialize a dictionary with the data you want. Then, export and then save it as a JSON file, as shown below:
+そのために、必要なデータを含む辞書を初期化します。次に、以下のようにエクスポートして JSON ファイルとして保存します。
 
 ```python
 export_data = {
@@ -366,15 +366,15 @@ with open(file_name, "w") as file:
     json.dump(export_data, file, indent=4)
 ```
 
-Import [`json`](https://docs.python.org/3/library/json.html) from the Python Standard Library:
+Python Standard Library から [`json`](https://docs.python.org/3/library/json.html) を import します。
 
 ```python
 import json
 ```
 
-### Step #10: Add Logs
+### ステップ #10: ログを追加する
 
-The scraping process using Web Scraping AI and ChatGPT analysis may take some time. To track the script’s progress, include logs by adding `print()` statements at key steps in the script:
+Web Scraping AI と ChatGPT 分析を使用したスクレイピングプロセスには時間がかかる場合があります。スクリプトの進行状況を追跡するために、スクリプトの主要ステップで `print()` 文を追加してログを含めます。
 
 ```python
 article_url = "https://www.cnn.com/2024/12/16/weather/white-christmas-forecast-climate/"
@@ -410,9 +410,9 @@ else:
     print("Scraping failed")
 ```
 
-### Step #11: Put It All Together
+### ステップ #11: すべてをまとめる
 
-Your final `script.py` file should contain:
+最終的な `script.py` ファイルには次の内容が含まれているはずです。
 
 ```python
 from dotenv import load_dotenv
@@ -499,19 +499,19 @@ with open("summary.json", "w") as file:
     json.dump(export_data, file, indent=4)
 ```
 
-Verify that it works with this command:
+このコマンドで動作確認してください。
 
 ```bash
 python3 script.py
 ```
 
-Or, on Windows:
+または Windows の場合：
 
 ```powershell
 python script.py
 ```
 
-The output in the terminal should be close to this one:
+ターミナルの出力は次のものに近いはずです。
 
 ```
 Scraping data from 'https://www.cnn.com/2024/12/16/weather/white-christmas-forecast-climate/'...
@@ -523,7 +523,7 @@ Exporting data to JSON
 Data exported to 'summary.json'
 ```
 
-Open the `open.json` file that appeared in the project’s directory and you should see something like this:
+プロジェクトディレクトリに表示された `open.json` ファイルを開くと、次のような内容が表示されるはずです。
 
 ```json
 {
@@ -532,14 +532,14 @@ Open the `open.json` file that appeared in the project’s directory and you s
 }
 ```
 
-## Conclusion
+## 結論
 
-The approach faces several challenges:
+このアプローチにはいくつかの課題があります。
 
-- **Changing Structures:** Websites frequently update their layouts.
-- **Anti-Bot Measures:** Advanced defenses are common.
-- **Scalability:** Extracting large volumes of data can be complex and costly.
+- **構造の変更:** Web サイトは頻繁にレイアウトを更新します。
+- **アンチボット対策:** 高度な防御が一般的です。
+- **スケーラビリティ:** 大量のデータを抽出することは複雑でコストが高くなりがちです。
 
-Bright Data’s Web Scraper API overcomes these hurdles, making it an invaluable tool for RAG and LangChain-powered solutions.
+Bright Data の Web Scraper API はこれらのハードルを克服し、RAG および LangChain を活用したソリューションにとって非常に有用なツールとなります。
 
-Sign up and explore our additional [offerings for AI and LLM](https://brightdata.com//use-cases/data-for-ai)!
+登録して、追加の [offerings for AI and LLM](https://brightdata.jp//use-cases/data-for-ai) もぜひご確認ください。
