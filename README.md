@@ -1,6 +1,6 @@
 # LangChain と Bright Data を使用した Webスクレイピング
 
-[![Promo](https://github.com/luminati-io/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.jp/) 
+[![Promo](https://github.com/bright-jp/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.jp/) 
 
 このガイドでは、Webスクレイピングを LangChain と組み合わせて、実運用の LLM データエンリッチメントを行う方法を、詳細なステップバイステップで解説します。
 
@@ -34,7 +34,7 @@ Webスクレイピングは Web サイトからデータを抽出し、RAG（[Re
 
 Bright Data の Web Scraper API を使用して CNN の記事からコンテンツを取得し、その後 OpenAI に送って要約する LangChain の Webスクレイピングスクリプトを構築する方法を学びます。ターゲットとして [この CNN 記事](https://www.cnn.com/2024/12/16/weather/white-christmas-forecast-climate/) を使用します。
 
-![CNN article on Christmas](https://github.com/luminati-io/langchain-web-scraping/blob/main/Images/image-131-1024x492.png)
+![CNN article on Christmas](https://github.com/bright-jp/langchain-web-scraping/blob/main/Images/image-131-1024x492.png)
 
 このシンプルな例は、SERP データに基づく AG チャットボットの作成など、追加の LangChain 機能で簡単に拡張できます。
 
@@ -128,23 +128,23 @@ Web Scraper API をセットアップするには、[公式ドキュメント](h
 
 まだ Bright Data アカウントがない場合は作成してください。ログイン後、アカウントのダッシュボードに移動します。ここで左側の「Web Scraper API」ボタンをクリックします。
 
-![Choosing Web Scraper API from the menu on the left](https://github.com/luminati-io/langchain-web-scraping/blob/main/Images/image-133-1024x489.png)
+![Choosing Web Scraper API from the menu on the left](https://github.com/bright-jp/langchain-web-scraping/blob/main/Images/image-133-1024x489.png)
 
 ターゲットサイトは [CNN.com](http://cnn.com/) なので、検索入力に「cnn」と入力し、「CNN news — Collecy by URL」スクレイパーを選択します。
 
-![Searching for hte CNN Scraper API](https://github.com/luminati-io/langchain-web-scraping/blob/main/Images/image-134-1024x486.png)
+![Searching for hte CNN Scraper API](https://github.com/bright-jp/langchain-web-scraping/blob/main/Images/image-134-1024x486.png)
 
 現在のページで **Create token** ボタンをクリックして [Bright Data API token](https://docs.brightdata.com/general/account/api-token) を生成します。
 
-![Creating a new token for the API](https://github.com/luminati-io/langchain-web-scraping/blob/main/Images/image-135-1024x408.png)
+![Creating a new token for the API](https://github.com/bright-jp/langchain-web-scraping/blob/main/Images/image-135-1024x408.png)
 
 次のモーダルが開き、トークンの詳細を設定できます。
 
-![Configuring the details of the new token](https://github.com/luminati-io/langchain-web-scraping/blob/main/Images/image-136.png)
+![Configuring the details of the new token](https://github.com/bright-jp/langchain-web-scraping/blob/main/Images/image-136.png)
 
 完了したら **Save** をクリックし、Bright Data API token の値をコピーします。
 
-![Once you clicked save, the new token is shown](https://github.com/luminati-io/langchain-web-scraping/blob/main/Images/image-137.png)
+![Once you clicked save, the new token is shown](https://github.com/bright-jp/langchain-web-scraping/blob/main/Images/image-137.png)
 
 `.env` ファイルに、以下のようにこの情報を保存します。
 
@@ -156,7 +156,7 @@ BRIGHT_DATA_API_TOKEN="<YOUR_BRIGHT_DATA_API_TOKEN>"
 
 これで、CNN news の Web Scraper API ページは次の例のようになります。
 
-![The CNN Scraper API page ](https://github.com/luminati-io/langchain-web-scraping/blob/main/Images/image-138-1024x492.png)
+![The CNN Scraper API page ](https://github.com/bright-jp/langchain-web-scraping/blob/main/Images/image-138-1024x492.png)
 
 ### ステップ #5: Webスクレイピングに Bright Data を使用する
 
@@ -312,7 +312,7 @@ CONTENT:
 
 ChatGPT に渡すと、次のように表示されます。
 
-![Passing the task of summarizing the content in less than 100 words](https://github.com/luminati-io/langchain-web-scraping/blob/main/Images/image-139-1024x626.png)
+![Passing the task of summarizing the content in less than 100 words](https://github.com/bright-jp/langchain-web-scraping/blob/main/Images/image-139-1024x626.png)
 
 ### ステップ #8: OpenAI を統合する
 
